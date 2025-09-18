@@ -18,7 +18,7 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+},{timestamps:true});
 
 const Post = mongoose.model("Post", postSchema);
 

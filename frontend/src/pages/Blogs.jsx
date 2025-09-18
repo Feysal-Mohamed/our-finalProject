@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../components/header";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Blogs = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:7000/read/post")
+      .get("https://som-store-bacend.onrender.com/read/post")
       .then((res) => setPosts(res.data))
       .catch((err) => console.error("Error fetching posts:", err));
   }, []);
@@ -29,12 +30,12 @@ const Blogs = () => {
             <Link to={`/post/${post._id}`} key={post._id}>
               <div className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition-shadow">
                 <img
-                  src={`http://localhost:7000/AlImages/${post.image}`}
+                  src={`https://som-store-bacend.onrender.com/AlImages/${post.image}`}
                   alt={post.title}
                   className="w-full h-56 object-cover"
                 />
                 <div className="p-4">
-                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2 truncate">
                     {post.title}
                   </h2>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
@@ -53,6 +54,7 @@ const Blogs = () => {
           </p>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

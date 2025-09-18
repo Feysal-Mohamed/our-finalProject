@@ -1,17 +1,10 @@
-const express=require("express")
-const Order = require("../Models/orderModel")
-const orderCroller=require("../controller/orderControler")
-const orderRouter=express.Router()
+const express = require("express");
+const orderController = require("../controller/orderControler");
+const orderRouter = express.Router();
 
+orderRouter.post("/create/order", orderController.createOrder);
+orderRouter.get("/read/orders", orderController.readOrders);
+orderRouter.patch("/mark-single-delivered/order/:id", orderController.markDeliveredOrder);
+orderRouter.delete("/delete/order/:id", orderController.deleteOrder);
 
-orderRouter.post("/create/order", orderCroller.createOrder);
-
-// Get all orders
-orderRouter.get("/read/orders", orderCroller.readOrders);
-
-// Delete order by ID
-orderRouter.delete("/delete/order/:id", orderCroller.deleteOrder);
-
-
-
-module.exports=orderRouter
+module.exports = orderRouter;

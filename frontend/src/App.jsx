@@ -15,6 +15,9 @@ import CartPage from './pages/Cartpage'
 import Orders from './dashbord/Orders'
 import MyDelivery from './pages/myDelivery'
 import DetailsBlog from './pages/detailsblog'
+import UsersPage from './dashbord/USerCustomer'
+import PostList from './dashbord/postList'
+import CreatePost from './dashbord/createPost'
 
 const App = () => {
   return (
@@ -49,6 +52,38 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+             <Route
+          path='/Postreader'
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <PostList/>
+            </ProtectedRoute>
+          }
+        />
+             <Route
+          path='/Orde'
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+                    <Route
+          path='/CreatePost'
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <CreatePost />
+            </ProtectedRoute>
+          }
+        />
+                    <Route
+          path='/user'
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <UsersPage />
+            </ProtectedRoute>
+          }
+        />
             <Route
           path='/Orde'
           element={
@@ -57,13 +92,25 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+                    <Route
+          path='/user'
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <UsersPage />
+            </ProtectedRoute>
+          }
+        />
+        
+        
       <Route path='/Register' element={<RegisterForm />} />
       <Route path='/login' element={<LoginForm />} />
       <Route path='/myDelivery' element={<MyDelivery />} />
       <Route path='/post/:id' element={<DetailsBlog />} />
+      <Route path='/singleproduct/:id' element={<SingleProduct/>} />
     </Routes>
     </div>
-  )
+  ) 
+  
 }
 
 export default App

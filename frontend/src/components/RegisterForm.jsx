@@ -22,7 +22,10 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:7000/create/Customer", formData);
+      const res = await axios.post(
+        "https://som-store-bacend.onrender.com/create/Customer",
+        formData
+      );
       setMessage(res.data.message);
 
       // Redirect based on role
@@ -52,7 +55,9 @@ const RegisterForm = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          {formData.role === "admin" ? "Admin Registration" : "Customer Registration"}
+          {formData.role === "admin"
+            ? "Admin Registration"
+            : "Customer Registration"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -104,19 +109,6 @@ const RegisterForm = () => {
               required
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
             />
-          </div>
-
-          <div>
-            <label className="block text-gray-700">Register As</label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300"
-            >
-              <option value="customer">Customer</option>
-              <option value="admin">Admin</option>
-            </select>
           </div>
 
           <button

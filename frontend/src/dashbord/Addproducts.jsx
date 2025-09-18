@@ -22,7 +22,7 @@ const AddProduct = () => {
         formdata.append("categ", Category);
         formdata.append("desc", Descript);
         formdata.append("prImg", Image1);
-    axios.post('http://localhost:7000/create/product',formdata)
+    axios.post('https://som-store-bacend.onrender.com/create/product',formdata)
       .then(() => {
 
        alert("Product Succefully Added")
@@ -31,7 +31,7 @@ const AddProduct = () => {
   }
   return (
     <div className='flex'>
-      <div className='fixed'>
+      <div className='fixed '>
         <Dash />
       </div>
       

@@ -15,7 +15,7 @@ const MyDelivery = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("http://localhost:7000/read/orders");
+        const res = await axios.get("https://som-store-bacend.onrender.com/read/orders");
         // Filter orders for this user by email only
         const userOrders = res.data.filter(order => order.customerEmail === filterValue);
         setOrders(userOrders);
@@ -54,7 +54,7 @@ const MyDelivery = () => {
                   <div key={idx} className="border p-3 rounded flex items-center space-x-4">
                     {item.prImg && (
                       <img
-                        src={`http://localhost:7000/AlImages/${item.prImg}`}
+                        src={`https://som-store-bacend.onrender.com/AlImages/${item.prImg}`}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded"
                       />

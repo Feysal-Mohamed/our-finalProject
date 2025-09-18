@@ -14,7 +14,10 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:7000/login/Customer", formData);
+      const res = await axios.post(
+        "https://som-store-bacend.onrender.com/login/Customer",
+        formData
+      );
       console.log("Login response:", res.data); // debug
 
       setMessage(res.data.message || "Login successful");
@@ -46,7 +49,9 @@ const LoginForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+          Login
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700">Email</label>
@@ -78,7 +83,12 @@ const LoginForm = () => {
           >
             Login
           </button>
-          <h1>I have Already Accounr <NavLink className={`text-blue-500 underline `} to="/Register"><a href="">Register Know</a></NavLink></h1>
+          <h1>
+            I have Already Accounr{" "}
+            <NavLink className={`text-blue-500 underline `} to="/Register">
+              <a href="">Register Know</a>
+            </NavLink>
+          </h1>
         </form>
 
         {message && (

@@ -76,6 +76,11 @@ const loginUser = async (req, res) => {
 // ---------------- Get All Users (Admin Only) ----------------
 const getAllUsers = async (req, res) => {
   try {
+    // ✅ Ensure only admins can see all users
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied. Admins only." });
+    }
+
     const users = await UserModel.find().select("-Password");
     res.status(200).json(users);
   } catch (error) {
@@ -88,6 +93,12 @@ const getAllUsers = async (req, res) => {
 const makeAdmin = async (req, res) => {
   try {
     const { userId } = req.params;
+
+    // ✅ Allow only existing admins to promote others
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Only admins can promote users" });
+    }
+
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { role: "admin" },
@@ -107,9 +118,38 @@ const makeAdmin = async (req, res) => {
   }
 };
 
+
+// ---------------- Remove Admin (Demote to Customer) ----------------
+const removeAdmin = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Only allow if user exists
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { role: "customer" },
+      { new: true }
+    ).select("-Password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Admin removed. User is now customer",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+
 module.exports = {
   registerUser,
   loginUser,
   getAllUsers,
   makeAdmin,
+  removeAdmin, // ✅ new
 };

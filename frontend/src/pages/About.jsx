@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/header";
 
 import { FaUserTie, FaTruck } from "react-icons/fa"; // Import icons
+import Footer from "../components/Footer";
 
 const About = () => {
   const [category, setCategory] = useState("electronics");
@@ -164,93 +165,7 @@ const About = () => {
       </div>
     </div>
 
-    <footer className="bg-white border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
-        
-        {/* Logo & About */}
-        <div>
-          <h2 className="text-2xl font-bold text-green-700">SHOPCART</h2>
-          <p className="mt-4 text-gray-600 text-sm leading-relaxed">
-            Discover curated furniture collections at Shopcart, blending style and 
-            comfort to elevate your living spaces.
-          </p>
-
-          {/* Social Icons */}
-          <div className="flex items-center gap-4 mt-6">
-            <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white transition">
-              <i className="fab fa-youtube"></i>
-            </a>
-            <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white transition">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white transition">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white transition">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" className="p-2 rounded-full bg-gray-100 hover:bg-green-600 hover:text-white transition">
-              <i className="fab fa-slack"></i>
-            </a>
-          </div>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">Quick Links</h3>
-          <ul className="mt-4 space-y-2 text-gray-600">
-            <li><a href="#" className="hover:text-green-600">About us</a></li>
-            <li><a href="#" className="hover:text-green-600">Contact us</a></li>
-            <li><a href="#" className="hover:text-green-600">Terms & Conditions</a></li>
-            <li><a href="#" className="hover:text-green-600">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-green-600">FAQs</a></li>
-            <li><a href="#" className="hover:text-green-600">Help</a></li>
-          </ul>
-        </div>
-
-        {/* Categories */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">Categories</h3>
-          <ul className="mt-4 space-y-2 text-gray-600">
-            <li><a href="#" className="hover:text-green-600">Mobiles</a></li>
-            <li><a href="#" className="hover:text-green-600">Appliances</a></li>
-            <li><a href="#" className="hover:text-green-600">Smartphones</a></li>
-            <li><a href="#" className="hover:text-green-600">Air Conditioners</a></li>
-            <li><a href="#" className="hover:text-green-600">Washing Machine</a></li>
-            <li><a href="#" className="hover:text-green-600">Kitchen Appliances</a></li>
-            <li><a href="#" className="hover:text-green-600">Gadget Accessories</a></li>
-          </ul>
-        </div>
-
-        {/* Newsletter */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">Newsletter</h3>
-          <p className="mt-4 text-gray-600 text-sm">
-            Subscribe to our newsletter to receive updates and exclusive offers.
-          </p>
-          <form className="mt-4 flex">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded-l-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="px-5 py-2 bg-green-600 text-white rounded-r-lg hover:bg-green-700 transition"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-200 mt-10 py-6 text-center text-sm text-gray-500">
-        © 2025 <span className="font-semibold text-green-700">SHOPCART</span>. All rights reserved.
-      </div>
-    </footer>
-
-   
+        <Footer />
     </div>
 
   );

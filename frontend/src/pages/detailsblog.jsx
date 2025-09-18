@@ -8,10 +8,18 @@ function DetailsBlog(){
 
   useEffect(() => {
     axios
-      .get(`http://localhost:7000/read/post/${id}`)
+      .get(`https://som-store-bacend.onrender.com/read/post/${id}`)
       .then((res) => setPost(res.data))
       .catch((err) => console.error("Error fetching post details:", err));
   }, [id]);
+    const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://som-store-bacend.onrender.com/read/post")
+      .then((res) => setPosts(res.data))
+      .catch((err) => console.error("Error fetching posts:", err));
+  }, []);
 
   if (!post) {
     return <p className="text-center py-10">Loading post details </p>;
@@ -27,7 +35,7 @@ function DetailsBlog(){
         <div className="md:col-span-2">
           {/* Sawirka weyn */}
           <img
-            src={`http://localhost:7000/AlImages/${post.image}`}
+            src={`https://som-store-bacend.onrender.com/AlImages/${post.image}`}
             alt="Blog main"
             className="w-full h-[300px] object-cover rounded-lg mb-6"
           />
@@ -77,48 +85,30 @@ function DetailsBlog(){
             <h2 className="text-xl font-bold text-gray-800 mb-4">Latest Blogs</h2>
             <div className="space-y-5">
               {/* Blog 1 */}
-              <div className="flex items-center gap-4">
+                  {posts.slice(0, 3).map((data) => (
+              <div key={data._id} className="flex items-center gap-4">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqfapnDEBg7qijQNEBJu171EGbZ0g03YTPaw&s"
+                  src={`https://som-store-bacend.onrender.com/AlImages/${data.image}`}
                   alt="Blog"
                   className="w-14 h-14 rounded-full object-cover"
                 />
                 <div>
-                  <h3 className="text-gray-800 font-semibold text-sm hover:text-red-500 cursor-pointer">
-                    Lotus Electronics – New Store Launch
+                  <h3 className="text-gray-800 line-clamp-1 font-semibold text-sm hover:text-red-500 cursor-pointer">
+                    {data.title}
                   </h3>
-                  <p className="text-xs text-gray-500">Feb 20, 2025</p>
+                    <h3 className="text-gray-800 font-semibold text-sm line-clamp-1 hover:text-red-500 cursor-pointer">
+                    {data.description}
+                  </h3>
+
+                  <p className="text-xs text-gray-500">
+                    {new Date(data.createdAt).toLocaleDateString()}
+                  </p>
                 </div>
               </div>
+            ))}
 
-              {/* Blog 2 */}
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKyDzFwO2giOr7CG5W9rn8YvP-WxINclwg0w&s"
-                  alt="Blog"
-                  className="w-14 h-14 rounded-full object-cover"
-                />
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm hover:text-red-500 cursor-pointer">
-                    Wine Tasting Event Highlights
-                  </h3>
-                  <p className="text-xs text-gray-500">Feb 15, 2025</p>
-                </div>
-              </div>
 
-              {/* Blog 3 */}
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqMGF4KpUTLNS1O0z7sWbF6y438m8TSIgNuA&s"
-                  alt="Blog"
-                  className="w-14 h-14 rounded-full object-cover"
-                />
-                <div>
-                  <h3 className="text-gray-800 font-semibold text-sm hover:text-red-500 cursor-pointer">
-                    10 French Wine Regions to Visit
-                  </h3>
-                  <p className="text-xs text-gray-500">Feb 10, 2025</p>
-                </div>
+           
               </div>
             </div>
           </div>
@@ -126,7 +116,7 @@ function DetailsBlog(){
         {/* End Sidebar */}
       </div>
       </div>
-    </div>
+  
     )
 }
 export default DetailsBlog
