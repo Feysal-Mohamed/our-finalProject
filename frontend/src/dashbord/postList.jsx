@@ -7,7 +7,7 @@ const PostList = () => {
   const [editForm, setEditForm] = useState({ title: "", description: "", image: null });
 
   useEffect(() => {
-    fetch("https://som-store-bacend.onrender.com/read/post")
+    fetch(`${import.meta.env.VITE_REACT_API}/read/post`)
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
@@ -19,7 +19,7 @@ const PostList = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
-    await fetch(`https://som-store-bacend.onrender.com/delete/post/${id}`, { method: "DELETE" });
+    await fetch(`${import.meta.env.VITE_REACT_API}/delete/post/${id}`, { method: "DELETE" });
     setPosts(posts.filter((p) => p._id !== id));
   };
 
@@ -30,7 +30,7 @@ const PostList = () => {
     formData.append("description", editForm.description);
     if (editForm.image) formData.append("image", editForm.image);
 
-    const res = await fetch(`https://som-store-bacend.onrender.com/update/post/${editPostId}`, {
+    const res = await fetch(`${import.meta.env.VITE_REACT_API}/update/post/${editPostId}`, {
       method: "PUT",
       body: formData,
     });
@@ -55,7 +55,7 @@ const PostList = () => {
             <div key={post._id} className="bg-white rounded-lg shadow-md overflow-hidden">
               {post.image && (
                 <img
-                  src={`https://som-store-bacend.onrender.com/AlImages/${post.image}`}
+                  src={`${import.meta.env.VITE_REACT_API}/AlImages/${post.image}`}
                   alt={post.title}
                   className="w-full h-48 object-cover"
                 />

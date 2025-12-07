@@ -1,7 +1,7 @@
 const OrderModel = require("../Models/orderModel");
 const ProductModel = require("../Models/productModel");
 
-// Create new order
+// ✅ Create new order
 const createOrder = async (req, res) => {
   const { Customers, customerEmail, customerPhone, product } = req.body;
 
@@ -39,8 +39,8 @@ const createOrder = async (req, res) => {
 
   const newOrder = new OrderModel({
     customerName: Customers,
-    customerEmail: customerEmail || '',
-    customerPhone: customerPhone || '',
+    customerEmail: customerEmail || "",
+    customerPhone: customerPhone || "",
     Products: Order,
     TotalAmount
   });
@@ -49,7 +49,7 @@ const createOrder = async (req, res) => {
   res.status(201).json(newOrder);
 };
 
-// Read all orders
+// ✅ Read all orders
 const readOrders = async (req, res) => {
   try {
     const orders = await OrderModel.find();
@@ -59,31 +59,48 @@ const readOrders = async (req, res) => {
   }
 };
 
-// Mark order as delivered (always true)
+// ✅ Mark as delivered
+// ✅ Update order (not just mark delivered)
 const markDeliveredOrder = async (req, res) => {
   try {
-    const updated = await OrderModel.findByIdAndUpdate(
-      req.params.id,
-      { delivered: true }, // always true
-      { new: true }
+    const orderId = req.params.id;
+    const updates = req.body; // 🧠 data to update (e.g., { isDelivered: true })
+
+    const updatedOrder = await OrderModel.findByIdAndUpdate(
+      orderId,
+      { ...updates, updatedAt: Date.now() }, // add timestamp automatically
+      { new: true } // returns the updated document
     );
 
-    if (!updated) return res.status(404).json({ message: "Order not found" });
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
 
-    res.status(200).json({ message: "Order marked as delivered", updated });
+    return res.status(200).json({
+      message: "Order updated successfully",
+      order: updatedOrder,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error(error);
+    return res.status(500).json({ message: "Failed to update order" });
   }
 };
 
-// Delete order
+// ✅ Delete order (backend version)
 const deleteOrder = async (req, res) => {
   try {
-    const deleted = await OrderModel.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: "Order not found" });
-    res.status(200).json({ message: "Order deleted successfully" });
+    const orderId = req.params.id;
+    const order = await OrderModel.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    await OrderModel.findByIdAndDelete(orderId);
+    return res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error(error);
+    return res.status(500).json({ message: "Failed to delete order" });
   }
 };
 

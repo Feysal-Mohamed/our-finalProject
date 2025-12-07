@@ -9,7 +9,7 @@ const Dashbord = () => {
   useEffect(() => {
     // Fetch orders (no token required if your API is public)
     axios
-      .get("https://som-store-bacend.onrender.com/read/orders")
+      .get(`${import.meta.env.VITE_REACT_API}/read/orders`)
       .then((res) => setOrders(res.data))
       .catch((err) => console.error("Error fetching orders:", err));
 
@@ -19,7 +19,7 @@ const Dashbord = () => {
 
     if (token) {
       axios
-        .get("https://som-store-bacend.onrender.com/read/all", {
+        .get(`${import.meta.env.VITE_REACT_API}/read/all`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUsers(res.data))

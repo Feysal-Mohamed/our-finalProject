@@ -16,7 +16,7 @@ const CreatePost = () => {
     formData.append("image", image);
 
     try {
-      const res = await fetch("https://som-store-bacend.onrender.com/create/post", {
+      const res = await fetch(`${import.meta.env.VITE_REACT_API}/create/post`, {
         method: "POST",
         body: formData,
       });

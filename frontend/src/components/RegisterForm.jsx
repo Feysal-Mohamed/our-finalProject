@@ -23,9 +23,10 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://som-store-bacend.onrender.com/create/Customer",
+        "${import.meta.env.VITE_REACT_API}/create/Customer",
         formData
       );
+
       setMessage(res.data.message);
 
       // Redirect based on role

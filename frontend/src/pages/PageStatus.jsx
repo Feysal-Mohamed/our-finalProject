@@ -19,7 +19,7 @@ const SingleProduct = () => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(
-          `https://som-store-bacend.onrender.com/singleProduct/product/${id}`
+          `${import.meta.env.VITE_REACT_API}/singleProduct/product/${id}`
         );
         setProduct(res.data);
       } catch (err) {
@@ -77,7 +77,7 @@ const SingleProduct = () => {
           <img
             src={
               product.prImg
-                ? `https://som-store-bacend.onrender.com/AlImages/${product.prImg}`
+                ? `${import.meta.env.VITE_REACT_API}/AlImages/${product.prImg}`
                 : "/fallback.jpg"
             }
             alt={product.name}

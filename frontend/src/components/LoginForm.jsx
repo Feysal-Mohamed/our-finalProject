@@ -15,9 +15,10 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://som-store-bacend.onrender.com/login/Customer",
+        "${import.meta.env.VITE_REACT_API}/login/Customer",
         formData
       );
+
       console.log("Login response:", res.data); // debug
 
       setMessage(res.data.message || "Login successful");
@@ -93,9 +94,8 @@ const LoginForm = () => {
 
         {message && (
           <p
-            className={`mt-4 text-center text-sm ${
-              message.includes("success") ? "text-green-600" : "text-red-600"
-            } font-medium`}
+            className={`mt-4 text-center text-sm ${message.includes("success") ? "text-green-600" : "text-red-600"
+              } font-medium`}
           >
             {message}
           </p>

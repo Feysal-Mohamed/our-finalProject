@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../components/header";
+import Footer from "../components/Footer";
 
 const MyDelivery = () => {
   const [orders, setOrders] = useState([]);
@@ -9,13 +10,13 @@ const MyDelivery = () => {
 
   // Get logged in user info
   const loggedInUser = JSON.parse(localStorage.getItem("LoggedInUser")) || {};
-  const filterField = "customerEmail";
+  // const filterField = "customerEmail";
   const filterValue = loggedInUser.Email || "";
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("https://som-store-bacend.onrender.com/read/orders");
+        const res = await axios.get(`${import.meta.env.VITE_REACT_API}/read/orders`);
         // Filter orders for this user by email only
         const userOrders = res.data.filter(order => order.customerEmail === filterValue);
         setOrders(userOrders);
@@ -54,7 +55,7 @@ const MyDelivery = () => {
                   <div key={idx} className="border p-3 rounded flex items-center space-x-4">
                     {item.prImg && (
                       <img
-                        src={`https://som-store-bacend.onrender.com/AlImages/${item.prImg}`}
+                        src={`${import.meta.env.VITE_REACT_API}/AlImages/${item.prImg}`}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded"
                       />
@@ -72,6 +73,8 @@ const MyDelivery = () => {
         </div>
       )}
     </div>
+      <Footer />
+
     </div>
   );
 };

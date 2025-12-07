@@ -1,43 +1,38 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const router = require("./router/ProductRouter");
-const customerRouter = require("./router/customerRouter");
-const orderRoter = require("./router/OrderRouter");
-// const orderRouter = require("./postRouter/orderRouter");
-const postRoutes = require("./router/postRouter");
-// require("dotenv").config();
 
+const productRouter = require("./router/ProductRouter");
+const customerRouter = require("./router/customerRouter");
+const orderRouter = require("./router/OrderRouter");
+const postRoutes = require("./router/postRouter");
+const dotenv = require("dotenv");
+
+dotenv.config();
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
-// Log incoming requests for debugging
-// app.use((req, res, next) => {
-//   console.log(`${req.method} ${req.url}`);
-//   next();
-// });
-
-// Static image route
+// Static route for serving images
 app.use("/AlImages", express.static("imageDocuments"));
 
-// Use routes
-app.use(router);
+// Use routers
+app.use(productRouter);
 app.use(customerRouter);
 app.use(postRoutes);
-app.use(orderRoter);
-// app.use(orderRouter);
+app.use(orderRouter);
 
-// Connect to MongoDB
-mongoose.connect("mongodb+srv://Some-StotoreDb:NooIu4a6X8RqUE63@cluster0.eyqxqqt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+// MongoDB connection
+mongoose.connect(process.env.mongoatlasurl,)
   .then(() => {
-    console.log("Mongoose is connected successfully by feysal");
+    console.log("✅ Mongoose is connected successfully by Feysal");
   })
-  .catch(err => console.error("MongoDB connection error:", err));
+  .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// Ensure PORT fallback in case env is missing
-// const PORT = process.env.port || 7000;
+// Define a proper port (with fallback)
+const PORT = process.env.PORT || 7000;
 
-app.listen(7000, () => console.log(`Server is running on port `));
+// Start server
+app.listen(PORT, () => console.log(`🚀 Server is running on port ${PORT}`));

@@ -27,7 +27,7 @@ const UsersPage = () => {
         return;
       }
 
-      const res = await axios.get("http://localhost:7000/read/all", {
+      const res = await axios.get(`${import.meta.env.VITE_REACT_API}/read/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -42,7 +42,7 @@ const UsersPage = () => {
   try {
     const token = JSON.parse(localStorage.getItem("LoggedInUser"))?.token;
     await axios.put(
-      `https://som-store-bacend.onrender.com/removeAdmin/${userId}`,
+      `${import.meta.env.VITE_REACT_API}/removeAdmin/${userId}`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -57,7 +57,7 @@ const UsersPage = () => {
     try {
       const token = JSON.parse(localStorage.getItem("LoggedInUser"))?.token;
       await axios.put(
-        `https://som-store-bacend.onrender.com/makeAdmin/${userId}`,
+        `${import.meta.env.VITE_REACT_API}/makeAdmin/${userId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -22,7 +22,7 @@ const AddProduct = () => {
         formdata.append("categ", Category);
         formdata.append("desc", Descript);
         formdata.append("prImg", Image1);
-    axios.post('https://som-store-bacend.onrender.com/create/product',formdata)
+    axios.post(`${import.meta.env.VITE_REACT_API}/create/product`,formdata)
       .then(() => {
 
        alert("Product Succefully Added")

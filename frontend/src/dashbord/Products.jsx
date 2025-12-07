@@ -19,7 +19,7 @@ const Product = () => {
 
   // Fetch all products
   const getData = () => {
-    axios.get('https://som-store-bacend.onrender.com/read/product')
+    axios.get(`${import.meta.env.VITE_REACT_API}/read/product`)
       .then(res => {
         setReadData(res.data);
       })
@@ -30,7 +30,7 @@ const Product = () => {
 
   // Delete a product by ID
   const deleteProduct = (id) => {
-    axios.delete(`https://som-store-bacend.onrender.com/delete/product/${id}`)
+    axios.delete(`${import.meta.env.VITE_REACT_API}/delete/product/${id}`)
       .then(() => {
         getData();
       })
@@ -41,7 +41,7 @@ const Product = () => {
 
   // Load product details into form for editing
   const handleEdit = (id) => {
-    axios.get(`https://som-store-bacend.onrender.com/singleProduct/product/${id}`)
+    axios.get(`${import.meta.env.VITE_REACT_API}/singleProduct/product/${id}`)
       .then(res => {
         const data = res.data;
         setEditingId(id);
@@ -50,7 +50,7 @@ const Product = () => {
         setQuant(data.quantity);
         setCategory(data.categ);
         setDescript(data.desc);
-        setImagePreview(`https://som-store-bacend.onrender.com/AlImages/${data.prImg}`);
+        setImagePreview(`${import.meta.env.VITE_REACT_API}/AlImages/${data.prImg}`);
         setImage1(null); // Reset image input until user uploads a new file
         setIsEditing(true);
       })
@@ -86,7 +86,7 @@ const Product = () => {
       formdata.append("img", Image1);
     }
 
-    axios.put(`https://som-store-bacend.onrender.com/update/product/${editingId}`, formdata, {
+    axios.put(`${import.meta.env.VITE_REACT_API}/update/product/${editingId}`, formdata, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -216,7 +216,7 @@ const Product = () => {
 
                       <img
                         className='w-[180px] rounded-lg mt-2'
-                        src={`https://som-store-bacend.onrender.com/AlImages/${items.prImg}`}
+                        src={`${import.meta.env.VITE_REACT_API}/AlImages/${items.prImg}`}
                         alt={items.name}
                       />
                     </td>

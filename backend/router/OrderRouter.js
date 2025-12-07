@@ -1,10 +1,23 @@
 const express = require("express");
-const orderController = require("../controller/orderControler");
-const orderRouter = express.Router();
+const {
+  createOrder,
+  readOrders,
+  markDeliveredOrder,
+  deleteOrder
+} = require("../controller/orderControler");
 
-orderRouter.post("/create/order", orderController.createOrder);
-orderRouter.get("/read/orders", orderController.readOrders);
-orderRouter.patch("/mark-single-delivered/order/:id", orderController.markDeliveredOrder);
-orderRouter.delete("/delete/order/:id", orderController.deleteOrder);
+const router = express.Router();
 
-module.exports = orderRouter;
+// Create order
+router.post("/create/order", createOrder);
+
+// Read all orders
+router.get("/read/orders", readOrders);
+
+// Mark single order as delivered means update from false to true
+router.patch("/mark-delivered/order/:id", markDeliveredOrder);
+
+// Delete order
+router.delete("/delete/order/:id", deleteOrder);
+
+module.exports = router;
