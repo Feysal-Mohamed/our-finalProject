@@ -15,7 +15,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "${import.meta.env.VITE_REACT_API}/login/Customer",
+        `${import.meta.env.VITE_REACT_API}/login/Customer`,
         formData
       );
 

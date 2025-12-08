@@ -23,7 +23,7 @@ const RegisterForm = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "${import.meta.env.VITE_REACT_API}/create/Customer",
+        `${import.meta.env.VITE_REACT_API}/create/Customer`,
         formData
       );
 
