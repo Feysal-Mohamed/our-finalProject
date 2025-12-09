@@ -8,21 +8,29 @@ const createProduct = async (req, res) => {
 
     const { quantity, desc, price, name, categ } = req.body;
 
-    const prImg = req.file.secure_url;        // Cloudinary URL
-    const prImgPublicId = req.file.public_id; // Cloudinary public ID
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload_stream(
+      { folder: "products" },
+      async (error, uploaded) => {
+        if (error) return res.status(500).json({ message: "Cloudinary Error", error });
 
-    const newProduct = new Product({
-      quantity,
-      name,
-      desc,
-      categ,
-      price,
-      prImg,
-      prImgPublicId
-    });
+        const newProduct = new Product({
+          quantity,
+          name,
+          desc,
+          categ,
+          price,
+          prImg: uploaded.secure_url,
+          prImgPublicId: uploaded.public_id
+        });
 
-    const savedProduct = await newProduct.save();
-    res.status(201).json(savedProduct);
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct);
+      }
+    );
+
+    // Pipe file buffer to Cloudinary
+    require("streamifier").createReadStream(req.file.buffer).pipe(result);
 
   } catch (error) {
     console.error("CREATE PRODUCT ERROR:", error);
@@ -50,9 +58,22 @@ const updateProduct = async (req, res) => {
         await cloudinary.uploader.destroy(productItem.prImgPublicId);
       }
 
-      // Save new image info
-      updateFields.prImg = req.file.secure_url;
-      updateFields.prImgPublicId = req.file.public_id;
+      // Upload new image
+      const result = await cloudinary.uploader.upload_stream(
+        { folder: "products" },
+        async (error, uploaded) => {
+          if (error) return res.status(500).json({ message: "Cloudinary Error", error });
+
+          updateFields.prImg = uploaded.secure_url;
+          updateFields.prImgPublicId = uploaded.public_id;
+
+          const updated = await Product.findByIdAndUpdate(req.params.id, updateFields, { new: true });
+          res.status(200).json(updated);
+        }
+      );
+
+      require("streamifier").createReadStream(req.file.buffer).pipe(result);
+      return; // exit function since response will be sent inside upload_stream
     }
 
     const updated = await Product.findByIdAndUpdate(req.params.id, updateFields, { new: true });
@@ -69,7 +90,6 @@ const readData = async (req, res) => {
   try {
     const { categ } = req.body || {};
     const filterData = {};
-
     if (categ) filterData.categ = categ;
 
     const products = await Product.find(filterData);
@@ -101,12 +121,10 @@ const deleteProduct = async (req, res) => {
     const productItem = await Product.findById(req.params.id);
     if (!productItem) return res.status(404).json({ message: "Product not found" });
 
-    // Delete image from Cloudinary
     if (productItem.prImgPublicId) {
       await cloudinary.uploader.destroy(productItem.prImgPublicId);
     }
 
-    // Delete product from MongoDB
     await Product.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: "Product and image deleted successfully" });
