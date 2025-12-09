@@ -131,8 +131,7 @@ const Shop = () => {
                     className="rounded-xl h-40 w-full object-cover"
                     src={
                       items.prImg
-                        ? `http://localhost:7000/AlImages/${items.prImg}`
-                        : "/fallback.jpg"
+                        
                     }
                     alt={items.name}
                   />

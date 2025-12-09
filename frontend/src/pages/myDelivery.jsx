@@ -55,7 +55,7 @@ const MyDelivery = () => {
                   <div key={idx} className="border p-3 rounded flex items-center space-x-4">
                     {item.prImg && (
                       <img
-                        src={`${import.meta.env.VITE_REACT_API}/AlImages/${item.prImg}`}
+                        src={item.prImg}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded"
                       />

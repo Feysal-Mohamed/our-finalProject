@@ -126,7 +126,7 @@ const CartPage = () => {
                   <tr key={item._id} className="border-b border-gray-200">
                     <td className="px-6 py-4 flex items-center space-x-4">
                       <img
-                        src={`${import.meta.env.VITE_REACT_API}/AlImages/${item.prImg}`}
+                        src={item.prImg}
                         alt={item.name}
                         className="w-20 h-20 object-cover rounded-lg"
                       />

@@ -55,7 +55,7 @@ const PostList = () => {
             <div key={post._id} className="bg-white rounded-lg shadow-md overflow-hidden">
               {post.image && (
                 <img
-                  src={`${import.meta.env.VITE_REACT_API}/AlImages/${post.image}`}
+                src={post.image}
                   alt={post.title}
                   className="w-full h-48 object-cover"
                 />

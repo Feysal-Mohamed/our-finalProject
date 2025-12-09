@@ -3,9 +3,11 @@ const Post = require("../Models/postModel");
 // ---------------- Create Post ----------------
 const createPost = async (req, res) => {
   try {
-    const title = req.body?.title;
-    const description = req.body?.description;
-    const image = req.file?.filename;
+    const { title, description } = req.body;
+
+    // Use secure_url to ensure full Cloudinary URL
+    const image = req.file?.secure_url || req.file?.path;
+
     if (!title || !description || !image) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -53,15 +55,16 @@ const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const { title, description } = req.body;
-    const image = req.file?.filename; // get new uploaded file if exists
+
+    const image = req.file?.secure_url || req.file?.path;
 
     const updatedData = { title, description };
-    if (image) updatedData.image = image; // update image only if new file uploaded
+    if (image) updatedData.image = image;
 
     const updatedPost = await Post.findByIdAndUpdate(
       postId,
       updatedData,
-      { new: true, runValidators: true }
+      { new: true }
     );
 
     if (!updatedPost)
@@ -71,6 +74,7 @@ const updatePost = async (req, res) => {
       message: "Post updated successfully",
       post: updatedPost,
     });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error", error: error.message });

@@ -4,12 +4,19 @@ const productController = require("../controller/productControll");
 
 const router = express.Router();
 
-// Single image upload
+// Create product with single image
 router.post("/create/product", uploadImage.single("prImg"), productController.createProduct);
+
+// Update product (image optional)
 router.put("/update/product/:id", uploadImage.single("prImg"), productController.updateProduct);
 
+// Read all products
 router.get("/read/product", productController.readData);
-router.get("/singleProduct/product/:id", productController.ReadSingleData);
+
+// Read single product
+router.get("/singleProduct/product/:id", productController.readSingleData);
+
+// Delete product
 router.delete("/delete/product/:id", productController.deleteProduct);
 
 module.exports = router;

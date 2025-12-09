@@ -51,7 +51,7 @@ const Blogs = () => {
                 onClick={() => setSelectedPost(post)}
               >
                 <img
-                  src={`${import.meta.env.VITE_REACT_API}/AlImages/${post.image}`}
+                src={post.image}
                   alt={post.title}
                   className="w-full h-60 object-cover"
                 />

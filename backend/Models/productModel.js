@@ -7,10 +7,12 @@ const productSchema = new mongoose.Schema({
   desc: { type: String, required: true },
   quantity: { type: Number, required: true },
   categ: { type: String, required: true },
-  prImg: { type: String, required: true }, // keep as array
+  prImg: { type: String, required: true },          // Cloudinary URL
+  prImgPublicId: { type: String },                  // Cloudinary public ID
   status: { type: String, enum: ["available", "out Of Stock"], default: "available" }
 }, { timestamps: true });
 
+// Auto-increment ID
 productSchema.plugin(AutoIncrement, { inc_field: "id" });
 
 // Auto-set status on save

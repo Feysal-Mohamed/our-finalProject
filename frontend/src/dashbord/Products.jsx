@@ -216,7 +216,7 @@ const Product = () => {
 
                       <img
                         className='w-[180px] rounded-lg mt-2'
-                        src={`${import.meta.env.VITE_REACT_API}/AlImages/${items.prImg}`}
+                        src={items.prImg}
                         alt={items.name}
                       />
                     </td>
